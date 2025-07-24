@@ -153,6 +153,10 @@ function Movie({ poster, name, rating, summary }) {
 
   const [show, setShow] = useState(true);
 
+  const summaryStyles ={
+    display: show ? "block": "none"
+  }
+
   return (
     <div class="movie-container">
       <img src={poster} alt={name} class="movie-poster" />
@@ -163,8 +167,10 @@ function Movie({ poster, name, rating, summary }) {
             ⭐ {rating}
           </p>
         </div>
-        <button onClick={() => setShow((show = false))}>Toggle Summary</button>
-        <p class="movie-summary">{summary}</p>
+        <button onClick={() => setShow((!show))}>Toggle Summary</button>
+        {/* <p>{show + ""}</p> */}
+        {/* Conditional Rendering - not recommended */}
+        {show ? <p style={summaryStyles} class="movie-summary">{summary}</p> : ""}
       </div>
     </div>
   );
