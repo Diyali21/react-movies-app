@@ -15,7 +15,7 @@ export default function App() {
       {/* <UserList /> */}
 
       {/* <ColorGame /> */}
-
+      <AddMovie/>
       <MovieList />
     </div>
   );
@@ -167,5 +167,17 @@ function Movie({ poster, name, rating, summary }) {
         <p class="movie-summary">{summary}</p>
       </div>
     </div>
+  );
+}
+
+function AddMovie(){
+  return(
+<div>
+  <input type="text" placeholder="Name" />
+  <input type="text" placeholder="Poster" />
+  <input type="text" placeholder="Summary" />
+  <input type="text" placeholder="Rating" />
+
+</div>
   );
 }
