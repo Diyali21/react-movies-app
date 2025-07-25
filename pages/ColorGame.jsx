@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ColorBox } from "./ColorBox";
+import { ColorBox } from "../src/ColorBox";
 
 // State Changes -> Update UI (useState)
 // Typing event -> Listens -> onChange, onInput, onKeyPress

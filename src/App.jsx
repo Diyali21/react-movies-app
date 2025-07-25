@@ -3,9 +3,11 @@
 import "./styles.css";
 // import { UserList } from "./UserList";
 import { useState } from "react";
-import { Routes, Route, Link } from "react-router";
-import { UserList } from "./UserList";
-import { ColorGame } from "./ColorGame";
+import { Routes, Route, Link, Navigate } from "react-router";
+import { UserList } from "../pages/UserList";
+import { ColorGame } from "../pages/ColorGame";
+import { Home } from "../pages/Home";
+import { MovieList } from "../pages/MovieList";
 // Task - Done
 // 1. /movies - MovieList
 // 2. /color-game
@@ -24,24 +26,24 @@ export default function App() {
         {/* <Link to ="/users">Users</Link>
         <Link to ="/color-game">Color Game</Link> */}
        <Routes>
-        <Route path = "/" element={<Home/>}></Route>
+        {/* <Route path = "/" element={<Home/>}></Route> */}
+        <Route path="films" element={<Navigate to ="/movies" replace />}/>
         <Route path = "movies" element={<MovieList/>}></Route>
         <Route path = "users" element={<UserList/>}></Route>
         <Route path = "color-game" element={<ColorGame/>}></Route>
+
+        <Route path="home" element={<Navigate to ="/" replace />}/>
+        <Route path="/" element={<Home/>}/>
        </Routes>
     </div>
   );
-}
-
-function Home(){
-  return <h1>Welcome to the movies app 🍿📽️</h1>;
 }
 
 // Task - Movie Dashboard: map
 // 1. Movie
 // 2. MovieList
 
-const INITIAL_MOVIES = [
+export const INITIAL_MOVIES = [
     {
       id: "99",
       name: "Vikram",
@@ -152,73 +154,8 @@ const INITIAL_MOVIES = [
     },
   ];
 
-// Smart (Parent)
-function MovieList() {
-
-  const [movies, setMovies] = useState(INITIAL_MOVIES);
-
-  const [name, setName] = useState("");
-  const [poster, setPoster] = useState("");
-  const [rating, setRating] = useState("");
-  const [summary, setSummary] = useState("");
-
- const addMovie = (event) => {
-    event.preventDefault(); // Prevent Refesh Behaviour
-    // setColors([...colors, color]);
-    console.log("addMovie", name, poster);
-
-    const newMovie = {
-      name: name,
-      poster: poster,
-      summary: summary,
-      rating: rating,
-    };
-
-    // Copy the existing movies + New movie
-    setMovies([...movies, newMovie]);
-  };
-
-
-  return (
-    <div>
-       <form onSubmit={addMovie} className="color-form-container">
-        <input
-          onChange={(event) => setName(event.target.value)}
-          type="text"
-          placeholder="Name"
-        />
-        <input
-          onChange={(event) => setPoster(event.target.value)}
-          type="text"
-          placeholder="Poster"
-        />
-
-        <input
-          onChange={(event) => setRating(event.target.value)}
-          type="text"
-          placeholder="Rating"
-        />
-
-        <input
-          onChange={(event) => setSummary(event.target.value)}
-          type="text"
-          placeholder="Summary"
-        />
-
-        {/* Task 1.2 Add Box to the List */}
-        <button type="submit">➕ Add</button>
-      </form>
-    <div className="movie-list-container">
-      {movies.map((movie, index) => (
-        <Movie key = {index} {...movie} />
-      ))}
-    </div>
-    </div>
-  );
-}
-
 // Presentation
-function Movie({ poster, name, rating, summary }) {
+export function Movie({ poster, name, rating, summary }) {
   const ratingStyle = { color: rating >= 8.5 ? "green" : "red" };
 
   const [show, setShow] = useState(true);

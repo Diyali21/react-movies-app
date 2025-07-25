@@ -1,4 +1,4 @@
-import { Msg } from "./Msg";
+import { Msg } from "../src/Msg";
 
 export function MsgList() {
   const names = ["Jeevan", "Ethan", "Siya", "Jamie"];
