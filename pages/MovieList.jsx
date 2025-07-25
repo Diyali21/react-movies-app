@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { INITIAL_MOVIES, Movie } from "../src/App";
+import { Movie } from "../components/Movie";
+import { INITIAL_MOVIES } from "../components/INITIAL_MOVIES";
 
 // Smart (Parent)
 export function MovieList() {
