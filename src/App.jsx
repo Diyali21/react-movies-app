@@ -3,31 +3,45 @@
 import "./styles.css";
 // import { UserList } from "./UserList";
 import { useState } from "react";
+import { Routes, Route, Link } from "react-router";
+import { UserList } from "./UserList";
+import { ColorGame } from "./ColorGame";
+// Task - Done
+// 1. /movies - MovieList
+// 2. /color-game
+// 3. /users
+// 4. /home -> Welcome to movie app
 
 // Component = UI + Logic
 // Default Export
 export default function App() {
-  console.log("Hi");
   return (
     <div className="App">
-      {/* <MsgList /> */}
-
-      {/* <UserList /> */}
-
-      {/* <ColorGame /> */}
-      <AddMovie/>
-      <MovieList />
+       <Link to ="/">Home</Link> |
+        <Link to ="/movies">Movies</Link> |
+        <Link to ="/color-game">Color Game</Link> |
+        <Link to ="/users">Users</Link>
+        {/* <Link to ="/users">Users</Link>
+        <Link to ="/color-game">Color Game</Link> */}
+       <Routes>
+        <Route path = "/" element={<Home/>}></Route>
+        <Route path = "movies" element={<MovieList/>}></Route>
+        <Route path = "users" element={<UserList/>}></Route>
+        <Route path = "color-game" element={<ColorGame/>}></Route>
+       </Routes>
     </div>
   );
+}
+
+function Home(){
+  return <h1>Welcome to the movies app 🍿📽️</h1>;
 }
 
 // Task - Movie Dashboard: map
 // 1. Movie
 // 2. MovieList
 
-// Smart (Parent)
-function MovieList() {
-  const movies = [
+const INITIAL_MOVIES = [
     {
       id: "99",
       name: "Vikram",
@@ -42,7 +56,7 @@ function MovieList() {
       id: "100",
       name: "RRR",
       poster:
-        "https://englishtribuneimages.blob.core.windows.net/gallary-content/2021/6/Desk/2021_6$largeimg_977224513.JPG",
+        "https://tse3.mm.bing.net/th/id/OIP.23Nd-uBU6qnw0jmiKT3NBwHaLH?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
       rating: 8.8,
       summary:
         "RRR is an upcoming Indian Telugu-language period action drama film directed by S. S. Rajamouli, and produced by D. V. V. Danayya of DVV Entertainments.",
@@ -85,7 +99,7 @@ function MovieList() {
       summary:
         "Marvel's The Avengers (classified under the name Marvel Avengers\n Assemble in the United Kingdom and Ireland), or simply The Avengers, is\n a 2012 American superhero film based on the Marvel Comics superhero team\n of the same name.",
       poster:
-        "https://terrigen-cdn-dev.marvel.com/content/prod/1x/avengersendgame_lob_crd_05.jpg",
+        "https://th.bing.com/th/id/OIP.zNDZbJ1vd_HW_D_3F1zaYgHaLH?w=203&h=304&c=7&r=0&o=7&pid=1.7&rm=3",
       trailer: "https://www.youtube.com/embed/eOrNdBpGMv8",
     },
     {
@@ -110,7 +124,7 @@ function MovieList() {
       id: "107",
       name: "Ratatouille",
       poster:
-        "https://resizing.flixster.com/gL_JpWcD7sNHNYSwI1ff069Yyug=/ems.ZW1zLXByZC1hc3NldHMvbW92aWVzLzc4ZmJhZjZiLTEzNWMtNDIwOC1hYzU1LTgwZjE3ZjQzNTdiNy5qcGc=",
+        "https://th.bing.com/th/id/OIP.qnn_AhyKJ2-9oE2z1uthngHaLH?w=203&h=304&c=7&r=0&o=7&pid=1.7&rm=3",
       rating: 8,
       summary:
         "Remy, a rat, aspires to become a renowned French chef. However, he fails to realise that people despise rodents and will never enjoy a meal cooked by him.",
@@ -119,7 +133,7 @@ function MovieList() {
     {
       name: "PS2",
       poster:
-        "https://m.media-amazon.com/images/M/MV5BYjFjMTQzY2EtZjQ5MC00NGUyLWJiYWMtZDI3MTQ1MGU4OGY2XkEyXkFqcGdeQXVyNDExMjcyMzA@._V1_.jpg",
+        "https://www.cinejosh.com/newsimg/newsmainimg/ponniyin-selvan-ps2-hits-jackpot-at-the-boxoffice_b_0805230719.jpg",
       summary:
         "Ponniyin Selvan: I is an upcoming Indian Tamil-language epic period action film directed by Mani Ratnam, who co-wrote it with Elango Kumaravel and B. Jeyamohan",
       rating: 8,
@@ -138,11 +152,67 @@ function MovieList() {
     },
   ];
 
+// Smart (Parent)
+function MovieList() {
+
+  const [movies, setMovies] = useState(INITIAL_MOVIES);
+
+  const [name, setName] = useState("");
+  const [poster, setPoster] = useState("");
+  const [rating, setRating] = useState("");
+  const [summary, setSummary] = useState("");
+
+ const addMovie = (event) => {
+    event.preventDefault(); // Prevent Refesh Behaviour
+    // setColors([...colors, color]);
+    console.log("addMovie", name, poster);
+
+    const newMovie = {
+      name: name,
+      poster: poster,
+      summary: summary,
+      rating: rating,
+    };
+
+    // Copy the existing movies + New movie
+    setMovies([...movies, newMovie]);
+  };
+
+
   return (
+    <div>
+       <form onSubmit={addMovie} className="color-form-container">
+        <input
+          onChange={(event) => setName(event.target.value)}
+          type="text"
+          placeholder="Name"
+        />
+        <input
+          onChange={(event) => setPoster(event.target.value)}
+          type="text"
+          placeholder="Poster"
+        />
+
+        <input
+          onChange={(event) => setRating(event.target.value)}
+          type="text"
+          placeholder="Rating"
+        />
+
+        <input
+          onChange={(event) => setSummary(event.target.value)}
+          type="text"
+          placeholder="Summary"
+        />
+
+        {/* Task 1.2 Add Box to the List */}
+        <button type="submit">➕ Add</button>
+      </form>
     <div className="movie-list-container">
-      {movies.map((movie) => (
-        <Movie {...movie} />
+      {movies.map((movie, index) => (
+        <Movie key = {index} {...movie} />
       ))}
+    </div>
     </div>
   );
 }
@@ -158,32 +228,20 @@ function Movie({ poster, name, rating, summary }) {
   }
 
   return (
-    <div class="movie-container">
-      <img src={poster} alt={name} class="movie-poster" />
+    <div className="movie-container">
+      <img src={poster} alt={name} className="movie-poster" />
       <div className="movie-content-container">
-        <div class="movie-specs">
-          <h2 class="movie-name">{name}</h2>
-          <p style={ratingStyle} class="movie-rating">
+        <div className="movie-specs">
+          <h2 className="movie-name">{name}</h2>
+          <p style={ratingStyle} className="movie-rating">
             ⭐ {rating}
           </p>
         </div>
         <button onClick={() => setShow((!show))}>Toggle Summary</button>
         {/* <p>{show + ""}</p> */}
         {/* Conditional Rendering - not recommended */}
-        {show ? <p style={summaryStyles} class="movie-summary">{summary}</p> : ""}
+        {show ? <p style={summaryStyles} className="movie-summary">{summary}</p> : ""}
       </div>
     </div>
-  );
-}
-
-function AddMovie(){
-  return(
-<div>
-  <input type="text" placeholder="Name" />
-  <input type="text" placeholder="Poster" />
-  <input type="text" placeholder="Summary" />
-  <input type="text" placeholder="Rating" />
-
-</div>
   );
 }

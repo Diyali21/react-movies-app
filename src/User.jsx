@@ -1,4 +1,4 @@
-import { Counter } from "./App";
+import { Counter } from "./Counter";
 
 export function User({ name = "Unknown", pic }) {
   return (
